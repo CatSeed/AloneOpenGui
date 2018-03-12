@@ -48,7 +48,8 @@ public class Check implements Listener {
 		}
 		
 		if (!openGui.containsKey(loc)){
-			openGui.put(loc, e.getPlayer().getName());
+			openGui.put(loc, name);
+			return;
 		}
 		
 		if(openGui.get(loc).equalsIgnoreCase(name)) {
@@ -57,14 +58,14 @@ public class Check implements Listener {
 		if(!updateMap(openGui.get(loc))) {
 			e.setCancelled(true);
 			((Player) e.getPlayer()).sendMessage("§8这个方块正在被别人使用");
-			rightBlock.remove(e.getPlayer().getName());	
+			rightBlock.remove(name);	
 		}
 	}
 
-  @EventHandler
-  public void onPlayerBreakBlock(BlockBreakEvent e){
+	@EventHandler
+	public void onPlayerBreakBlock(BlockBreakEvent e){
 	  
-      Location loc = e.getBlock().getLocation();
+	  Location loc = e.getBlock().getLocation();
       
       if (!openGui.containsKey(loc) || loc == null){
     	  return;
@@ -72,15 +73,14 @@ public class Check implements Listener {
 
       String name = e.getPlayer().getName();
       if(openGui.get(loc).equalsIgnoreCase(name)) {
-		  openGui.remove(loc);
-		  rightBlock.remove(name);
+    	  delOneDateInMap(e.getPlayer());
     	  return;
       }
       if(!updateMap(openGui.get(loc))) {
     	  e.setCancelled(true);
     	  ((Player) e.getPlayer()).sendMessage("§8这个方块正在被别人使用你不能破坏");
       }
-  }
+	}
   
 	@EventHandler
 	public void onPlayerCloseInventory(InventoryCloseEvent e) {
@@ -97,11 +97,12 @@ public class Check implements Listener {
 	 * @return 更新成功返回true
 	 */
 	private boolean updateMap(String name) {
-	      Player player = Bukkit.getPlayer(name);
-	      if(player == null || !player.isOnline()) {
-	    	  delOneDateInMap(player);
-	    	  return true;
-	      }
+		
+		Player player = Bukkit.getPlayer(name);
+		if(player == null || !player.isOnline()) {
+			delOneDateInMap(player);
+			return true;
+		}
 		return false;
 	}
 	/**
