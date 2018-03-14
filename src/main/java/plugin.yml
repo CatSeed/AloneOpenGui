@@ -1,9 +1,11 @@
 main: cc.baka9.aloneopengui.Main
 name: AloneOpenGui
-version: 1.1
+version: 1.2
 commands:
   aog:
     usage: |
-            §a/<command> add §c把手中的物品添加到禁止列表
-            §a/<command> del §c把手中的物品从禁止列表中移除
-            §a/<command> reload §c重载插件
+            §a/<command> add  把手中的物品添加到方块识别列表
+            §a/<command> del  把手中的物品从方块识别列表中移除
+            §c/<command> addmenu  把手中的物品添加到菜单识别列表
+            §c/<command> delmenu  把手中的物品从菜单识别列表中移除
+            §6/<command> reload  重载插件

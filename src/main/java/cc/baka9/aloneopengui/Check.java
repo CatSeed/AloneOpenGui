@@ -30,9 +30,14 @@ public class Check implements Listener {
 		}
 		String id = e.getClickedBlock().getTypeId()+"";
 		String type = String.valueOf(e.getClickedBlock().getType());
+		String handItemType = e.getPlayer().getItemInHand().getType().name();
+		String handItemId = e.getPlayer().getItemInHand().getTypeId()+"";
 		
 		if (Config.getId().contains(id) || Config.getId().contains(type)) {
-    	  
+			if(Config.getMenu().contains(handItemType) || Config.getMenu().contains(handItemId)) {
+				e.setCancelled(true);
+				return;
+			}
 			rightBlock.put(e.getPlayer().getName(), e.getClickedBlock().getLocation());
 		}
       
@@ -40,10 +45,9 @@ public class Check implements Listener {
   
 	@EventHandler
 	public void onPlayerOpenInventory(InventoryOpenEvent e){
-		
 		String name = e.getPlayer().getName();
 		Location loc = rightBlock.get(name);
-		if(loc == null) {
+		if(loc == null ) {
 			return;
 		}
 		
@@ -58,7 +62,7 @@ public class Check implements Listener {
 		if(!updateMap(openGui.get(loc))) {
 			e.setCancelled(true);
 			((Player) e.getPlayer()).sendMessage("§8这个方块正在被别人使用");
-			rightBlock.remove(name);	
+			rightBlock.remove(name);
 		}
 	}
 

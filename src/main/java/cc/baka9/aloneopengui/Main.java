@@ -10,10 +10,10 @@ public class Main extends JavaPlugin {
 	
 	public void onEnable() {
 		Config.init(this);
-		System.out.println("禁止的方块id或方块名: " + Config.getId());
+		getLogger().info("禁止的方块id或方块名: " + Config.getId());
+		getLogger().info("禁止的菜单id或菜单物品名: " + Config.getMenu());	
 		String command = YamlConfiguration
-				.loadConfiguration(this.getClass()
-						.getResourceAsStream("/plugin.yml"))
+				.loadConfiguration(this.getClass().getResourceAsStream("/plugin.yml"))
 				.getConfigurationSection("commands")
 				.getKeys(false).toString()
 				.replaceAll("[\\[\\]]", "");
